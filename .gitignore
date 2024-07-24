@@ -1,0 +1,49 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# Dependency directories
+bower_components/
+
+# Environment variables
+.env
+.env.*.local
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+
+# Misc
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Yarn
+yarn-error.log
+
+# Next.js build output
+.next/
+
+# Vite build output
+.vite/
+
+# TypeScript output
+*.tsbuildinfo
