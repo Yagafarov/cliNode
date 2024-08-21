@@ -26,7 +26,7 @@ program
 
 program
   .command('create <projectName>')
-  .description('Create a new item interactively')
+  .description('Create a new project interactively')
   .action(async (projectName) => {
     const projectPath = path.resolve(projectName);
 
@@ -46,6 +46,15 @@ program
     ]);
 
     if (type === 'react') {
+      const { language } = await inquirer.prompt([
+        {
+          type: 'list',
+          name: 'language',
+          message: 'Would you like to use JavaScript or TypeScript?',
+          choices: ['JavaScript', 'TypeScript'],
+        },
+      ]);
+
       const { uiLibrary } = await inquirer.prompt([
         {
           type: 'list',
@@ -58,7 +67,8 @@ program
       const spinner = ora(`Creating a new React project: ${projectName}...`).start();
 
       try {
-        await execPromise(`npm create vite@latest ${projectName} -- --template react`, { cwd: path.dirname(projectPath) });
+        const template = language === 'TypeScript' ? 'react-ts' : 'react';
+        await execPromise(`npm create vite@latest ${projectName} -- --template ${template}`, { cwd: path.dirname(projectPath) });
         spinner.succeed('React project created successfully.');
 
         process.chdir(projectPath);
@@ -89,27 +99,28 @@ program
           spinner.succeed(`${uiLibrary} installed successfully.`);
 
           if (uiLibrary === 'Tailwind CSS') {
-            // Add Tailwind CSS configuration
             const tailwindConfig = `
-            /** @type {import('tailwindcss').Config} */
-            module.exports = {
-              content: [
-                "./index.html",
-                "./src/**/*.{js,ts,jsx,tsx}",
-              ],
-              theme: {
-                extend: {},
-              },
-              plugins: [],
-            };
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
             `;
-            fs.writeFileSync('tailwind.config.js', tailwindConfig);
+            fs.writeFileSync(path.join(projectPath, 'tailwind.config.js'), tailwindConfig);
 
-            // Update CSS file to include Tailwind imports
-            fs.writeFileSync(
-              'src/index.css',
-              `@tailwind base;\n@tailwind components;\n@tailwind utilities;`
-            );
+            const postcssConfig = `
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+            `;
+            fs.writeFileSync(path.join(projectPath, 'postcss.config.js'), postcssConfig);
+
+            spinner.succeed('Tailwind CSS configuration files created.');
           }
         }
 
@@ -131,16 +142,13 @@ program
 
 program
   .command('info')
-  .description('Displays information about the CLI tool and the developer')
+  .description('Displays information about the CLI tool and developer')
   .action(() => {
-    console.log(chalk.bold('CLI Information'));
-    console.log(chalk.green('Name: anodra-cli'));
-    console.log(chalk.green('Version: 1.0.3'));
-    console.log(chalk.green('Description: A command-line tool to create and manage projects interactively.'));
-    console.log();
+    console.log(chalk.bold('Anodra CLI Tool'));
+    console.log(chalk.blue('Version: 1.0.4'));
+    console.log(chalk.blue('Description: A CLI tool for creating React and Next.js projects with UI library options.'));
 
-    
-    console.log(chalk.bold('Developer Information'));
+    console.log(chalk.bold('\nDeveloper Information'));
     console.log(chalk.blue('Name: Dinmuhammad Yagafarov'));
     console.log(chalk.blue('Email: dinmuhammadyagafarov@gmail.com'));
     console.log(chalk.blue('GitHub: https://github.com/yagafarov'));
