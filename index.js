@@ -51,7 +51,7 @@ program
           type: 'list',
           name: 'uiLibrary',
           message: 'Which UI library would you like to use?',
-          choices: ['MUI Design', 'Bootstrap', 'Ant Design', 'None'],
+          choices: ['MUI Design', 'Bootstrap', 'Ant Design', 'Tailwind CSS', 'None'],
         },
       ]);
 
@@ -79,11 +79,38 @@ program
             case 'Ant Design':
               installCommand = 'npm install antd';
               break;
+            case 'Tailwind CSS':
+              installCommand = 'npm install -D tailwindcss postcss autoprefixer && npx tailwindcss init';
+              break;
           }
 
           spinner.start(`Installing ${uiLibrary}...`);
           await execPromise(installCommand);
           spinner.succeed(`${uiLibrary} installed successfully.`);
+
+          if (uiLibrary === 'Tailwind CSS') {
+            // Add Tailwind CSS configuration
+            const tailwindConfig = `
+            /** @type {import('tailwindcss').Config} */
+            module.exports = {
+              content: [
+                "./index.html",
+                "./src/**/*.{js,ts,jsx,tsx}",
+              ],
+              theme: {
+                extend: {},
+              },
+              plugins: [],
+            };
+            `;
+            fs.writeFileSync('tailwind.config.js', tailwindConfig);
+
+            // Update CSS file to include Tailwind imports
+            fs.writeFileSync(
+              'src/index.css',
+              `@tailwind base;\n@tailwind components;\n@tailwind utilities;`
+            );
+          }
         }
 
         spinner.start('Opening project in VS Code...');
@@ -104,8 +131,15 @@ program
 
 program
   .command('info')
-  .description('Displays information about the developer')
+  .description('Displays information about the CLI tool and the developer')
   .action(() => {
+    console.log(chalk.bold('CLI Information'));
+    console.log(chalk.green('Name: anodra-cli'));
+    console.log(chalk.green('Version: 1.0.0'));
+    console.log(chalk.green('Description: A command-line tool to create and manage projects interactively.'));
+    console.log();
+
+    
     console.log(chalk.bold('Developer Information'));
     console.log(chalk.blue('Name: Dinmuhammad Yagafarov'));
     console.log(chalk.blue('Email: dinmuhammadyagafarov@gmail.com'));

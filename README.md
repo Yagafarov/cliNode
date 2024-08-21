@@ -52,6 +52,7 @@ You can use the `anodra` tool by running commands in your terminal.
     - `MUI Design`
     - `Bootstrap`
     - `Ant Design`
+    - `Tailwind CSS`
     - `None`
 
 `info` - Displays information about the developer.
@@ -62,12 +63,19 @@ You can use the `anodra` tool by running commands in your terminal.
 
 #### Output:
 ```sh
+
+CLI Information
+Name: anodra-cli
+Version: 1.0.0
+Description: A command-line tool to create and manage projects interactively.
+
 Developer Information
 Name: Dinmuhammad Yagafarov
 Email: dinmuhammadyagafarov@gmail.com
 GitHub: https://github.com/yagafarov
 Telegram: https://t.me/codewithdin
 Bio: Full-stack developer with experience in React, Node.js, and more.
+
 ```
 
 `help` - For more information on how to use `anodra`, you can always run:
