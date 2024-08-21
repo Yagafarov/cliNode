@@ -1,6 +1,6 @@
 {
   "name": "anodra",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A CLI tool for creating projects with different templates and libraries.",
   "main": "index.js",
   "bin": {
