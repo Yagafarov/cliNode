@@ -43,9 +43,13 @@ You can use the `anodra` tool by running commands in your terminal.
 - `<projectName>` : The name of the project you want to create.
 
 #### Interactive Prompts:
-#### 1. Type of Project:
+#### 0. Type of Project:
  - `react`
  - `next`
+
+#### 1. Type of Project language:
+ - `Javascript`
+ - `Typscript`
 
 #### 2. If react is selected:
  - `UI library`
