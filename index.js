@@ -135,7 +135,7 @@ program
   .action(() => {
     console.log(chalk.bold('CLI Information'));
     console.log(chalk.green('Name: anodra-cli'));
-    console.log(chalk.green('Version: 1.0.0'));
+    console.log(chalk.green('Version: 1.0.3'));
     console.log(chalk.green('Description: A command-line tool to create and manage projects interactively.'));
     console.log();
 
