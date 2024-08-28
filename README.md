@@ -70,7 +70,7 @@ You can use the `anodra` tool by running commands in your terminal.
 
 CLI Information
 Name: anodra-cli
-Version: 1.0.0
+Version: 1.0.5
 Description: A command-line tool to create and manage projects interactively.
 
 Developer Information

@@ -100,28 +100,36 @@ program
 
           if (uiLibrary === 'Tailwind CSS') {
             const tailwindConfig = `
-module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+          module.exports = {
+            content: ["./src/**/*.{js,ts,jsx,tsx}"],
+            theme: {
+              extend: {},
+            },
+            plugins: [],
+          };
             `;
             fs.writeFileSync(path.join(projectPath, 'tailwind.config.js'), tailwindConfig);
-
+          
             const postcssConfig = `
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
+          module.exports = {
+            plugins: {
+              tailwindcss: {},
+              autoprefixer: {},
+            },
+          };
             `;
-            fs.writeFileSync(path.join(projectPath, 'postcss.config.js'), postcssConfig);
-
+            fs.writeFileSync(path.join(projectPath, 'postcss.config.cjs'), postcssConfig);
+          
+            const indexCss = `
+          @tailwind base;
+          @tailwind components;
+          @tailwind utilities;
+            `;
+            fs.writeFileSync(path.join(projectPath, 'src/index.css'), indexCss);
+          
             spinner.succeed('Tailwind CSS configuration files created.');
           }
+          
         }
 
         spinner.start('Opening project in VS Code...');
@@ -145,7 +153,7 @@ program
   .description('Displays information about the CLI tool and developer')
   .action(() => {
     console.log(chalk.bold('Anodra CLI Tool'));
-    console.log(chalk.blue('Version: 1.0.4'));
+    console.log(chalk.blue('Version: 1.0.5'));
     console.log(chalk.blue('Description: A CLI tool for creating React and Next.js projects with UI library options.'));
 
     console.log(chalk.bold('\nDeveloper Information'));
